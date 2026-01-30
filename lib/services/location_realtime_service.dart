@@ -9,6 +9,7 @@ class LocationRealtimeService {
   StreamSubscription<Position>? _positionStream;
 
   void startTracking({
+    required String groupCode,
     required Function(double lat, double lng) onLocationChanged,
   }) {
     final user = _auth.currentUser;
@@ -19,18 +20,19 @@ class LocationRealtimeService {
         accuracy: LocationAccuracy.high,
         distanceFilter: 10,
       ),
-    ).listen((Position position) {
-      // 🔥 Firebase
-      _firestore.collection('users').doc(user.uid).set({
+    ).listen((position) {
+      _firestore
+          .collection('groups')
+          .doc(groupCode)
+          .collection('members')
+          .doc(user.uid)
+          .set({
         'email': user.email,
-        'location': {
-          'lat': position.latitude,
-          'lng': position.longitude,
-          'updatedAt': FieldValue.serverTimestamp(),
-        }
+        'lat': position.latitude,
+        'lng': position.longitude,
+        'updatedAt': FieldValue.serverTimestamp(),
       }, SetOptions(merge: true));
 
-      // 📍 UI (Google Map)
       onLocationChanged(position.latitude, position.longitude);
     });
   }

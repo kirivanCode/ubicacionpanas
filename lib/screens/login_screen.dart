@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
-import 'map_screen.dart';
+
 import 'register_screen.dart';
+import 'group_entry_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -25,7 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
       );
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => const MapScreen()),
+        MaterialPageRoute(builder: (_) => GroupEntryScreen()),
       );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(

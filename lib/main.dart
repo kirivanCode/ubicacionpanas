@@ -3,7 +3,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:share_location_app/screens/login_screen.dart';
 import 'firebase_options.dart';
 
-import 'screens/live_map_screen.dart';
 
 
 void main() async {
